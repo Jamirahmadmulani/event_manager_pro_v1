@@ -11,9 +11,9 @@ class Config:
 
     
     SQLALCHEMY_DATABASE_URI = os.getenv(
-        "DATABASE_URL",
-        "mysql+pymysql://root:root@localhost/event_db"
-    )
+       "DATABASE_URL",
+    "sqlite:///event_db.sqlite3"
+)
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
