@@ -424,6 +424,7 @@ def event_history():
     return render_template("event_history.html", logs=logs)
 
 
+start_scheduler(app)
+
 if __name__ == "__main__":
-    start_scheduler(app)
-    app.run(debug=True)   
+    app.run(debug=True)
