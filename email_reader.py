@@ -2,7 +2,7 @@ import imaplib
 import email
 import re
 import json
-import google.generativeai as genai
+from google import genai
 from datetime import datetime, timedelta, timezone
 from bs4 import BeautifulSoup
 import email.utils
