@@ -1,6 +1,6 @@
 import os
 import re
-from google import genai
+from google import generativeai as genai
 from langgraph.graph import StateGraph
 from models import Event
 from dotenv import load_dotenv
