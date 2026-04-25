@@ -1,13 +1,10 @@
-# Production Server
 gunicorn
 
-# Core Framework
 Flask==3.1.3
 Flask-Mail==0.10.0
 Flask-SQLAlchemy==3.1.1
 Flask-APScheduler==1.13.1
 
-# Google AI (Using the latest SDK as per your code's need)
 google-genai
 google-api-python-client
 google-auth
@@ -15,11 +12,10 @@ google-auth-httplib2
 google-api-core
 googleapis-common-protos
 proto-plus
-protobuf
+protobuf>=4.25.8,<6.0.0
 grpcio
 grpcio-status
 
-# Database & Utilities
 SQLAlchemy==2.0.49
 PyMySQL==1.1.2
 python-dotenv==1.2.2
@@ -29,7 +25,6 @@ beautifulsoup4
 lxml
 PyYAML
 
-# Core Dependencies
 Werkzeug==3.1.8
 Jinja2==3.1.6
 itsdangerous==2.2.0
@@ -37,12 +32,10 @@ click==8.3.2
 blinker==1.9.0
 MarkupSafe==3.0.3
 
-# AI & Data
 openai
 pydantic
 pydantic_core
 
-# Networking
 httpx
 httpcore
 h11
@@ -50,7 +43,6 @@ anyio
 sniffio
 certifi
 
-# Misc
 greenlet
 tqdm
 tenacity
