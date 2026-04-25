@@ -26,16 +26,21 @@ class EventUpdateLog(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    #  linked event
+    # 🔗 linked event
     event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
 
-    #  snapshot of updated data
+    # 📌 snapshot of updated data
     name = db.Column(db.String(100))
     date = db.Column(db.Date)
     location = db.Column(db.String(100))
     description = db.Column(db.Text)
 
-    #  what fields were changed
+    # 🔥 what fields were changed
     fields_changed = db.Column(db.String(255))
 
+   
+
+    
+
+    # ⏰ auto timestamp
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
