@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-3">Add Event</h2>
+
+    <form method="POST" onsubmit="return validateForm()">
+
+       
+        <input type="text" name="name" id="name"
+               class="form-control mb-2"
+               placeholder="Event Name">
+        <small id="nameError" class="text-danger"></small>
+
+        
+        <input type="date" name="date" id="date"
+               class="form-control mb-2">
+        <small id="dateError" class="text-danger"></small>
+
+        
+        <input type="text" name="location" id="location"
+               class="form-control mb-2"
+               placeholder="Location">
+        <small id="locationError" class="text-danger"></small>
+
+        
+        <textarea name="description"
+                  class="form-control mb-2"
+                  placeholder="Description (optional)"></textarea>
+
+         
+         
+
+        <button class="btn btn-success w-100">Add Event</button>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+
+<script>
+function validateForm() {
+
+    let isValid = true;
+
+    let name = document.getElementById("name").value.trim();
+    let date = document.getElementById("date").value;
+    let location = document.getElementById("location").value.trim();
+
+    
+    document.getElementById("nameError").innerText = "";
+    document.getElementById("dateError").innerText = "";
+    document.getElementById("locationError").innerText = "";
+
+    
+    if (name.length < 3) {
+        document.getElementById("nameError").innerText = "Name must be at least 3 characters";
+        isValid = false;
+    }
+
+   
+    let today = new Date().toISOString().split("T")[0];
+    if (!date || date < today) {
+        document.getElementById("dateError").innerText = "Select a valid future date";
+        isValid = false;
+    }
+
+    
+    if (location === "") {
+        document.getElementById("locationError").innerText = "Location is required";
+        isValid = false;
+    }
+
+    return isValid; 
+}
+</script>
+
+{% endblock %}

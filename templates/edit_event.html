@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-3">Edit Event</h2>
+
+    <form method="POST">
+
+     
+        <input type="text" name="name"
+               value="{{ event.name }}"
+               class="form-control mb-2"
+               placeholder="Event Name"
+               required>
+
+        
+        <input type="date" name="date" value="{{event.date}}"placeholder="dd/mm/yy">
+
+        
+        <input type="text" name="location"
+               value="{{ event.location }}"
+               class="form-control mb-2"
+               placeholder="Location"
+               required>
+
+       
+        <textarea name="description"
+                  class="form-control mb-2"
+                  placeholder="Description">{{ event.description }}</textarea>
+
+        
+        <button class="btn btn-primary">Update Event</button>
+
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+{% endblock %}
