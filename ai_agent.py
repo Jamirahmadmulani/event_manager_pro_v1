@@ -1,6 +1,6 @@
 import os
 import re
-from google import generativeai as genai
+from google import genai
 from langgraph.graph import StateGraph
 from models import Event
 from dotenv import load_dotenv
@@ -10,9 +10,7 @@ load_dotenv()
 
 #  GEMINI CLIENT
 
-client = genai.Client(
-    api_key=os.getenv("GEMINI_API_KEY")   
-)
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 #  WORKING MODEL
 MODEL = "gemini-flash-latest"
