@@ -15,12 +15,15 @@ Flask-Mail==0.10.0
 Flask-SQLAlchemy==3.1.1
 Flask-APScheduler==1.13.1
 
+# ===== GEMINI ONLY (CLEAN AI STACK) =====
 google-generativeai==0.8.6
 google-api-core==2.30.3
 google-api-python-client==2.194.0
 google-auth==2.49.2
 google-auth-httplib2==0.3.1
 googleapis-common-protos==1.74.0
+proto-plus==1.27.2
+protobuf>=4.25.8,<6.0.0
 
 greenlet==3.4.0
 grpcio
@@ -45,8 +48,6 @@ orjson==3.11.8
 ormsgpack==1.12.2
 
 packaging==26.1
-proto-plus==1.27.2
-protobuf==4.25.8
 
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
