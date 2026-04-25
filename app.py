@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from sqlalchemy import or_
 from config import Config
-from models import db, Event, User
+from models import db, Event, User , EventUpdateLog
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from email_reader import read_email_replies
+from flask_apscheduler import APScheduler
 
 
 
@@ -73,56 +74,7 @@ def login_post():
     except Exception as e:
         flash(str(e), "danger")
         return redirect(url_for("login"))
-@app.route("/update/<int:id>", methods=["GET", "POST"])
-def update_event(id):
 
-    if not login_required():
-        return redirect(url_for("login"))
-
-    event = Event.query.get_or_404(id)
-
-    if request.method == "POST":
-
-        try:
-          
-            # UPDATE OPTIONAL FIELD
-            
-            event.description = request.form.get("description", event.description)
-
-            db.session.commit()
-
-           
-            #  CONFIRMATION EMAIL
-            
-            user = User.query.get(event.created_by)
-
-            send_email(
-                user.email,
-                "Event Updated Successfully ",
-                f"""
-Hello 
-
-Your event has been updated successfully.
-
-Event Details:
-----------------
-Name: {event.name}
-Date: {event.date}
-Location: {event.location}
-Description: {event.description}
-
-Thanks for using Event Management System 
-"""
-            )
-
-            flash("Event updated successfully", "success")
-            return redirect(url_for("index"))
-
-        except Exception as e:
-            db.session.rollback()
-            flash(str(e), "danger")
-
-    return render_template("update_event.html", event=event)
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -147,7 +99,7 @@ def register():
             db.session.add(user)
             db.session.commit()
 
-            # AUTO EMAIL (ADD)
+            # AUTO EMAIL (
             send_email(
                 email,
                 "Welcome ",
@@ -362,8 +314,6 @@ def chat_ui():
 
 
 
-
-
 @app.route("/read-mails")
 def read_mails():
     if "user_id" not in session:
@@ -371,8 +321,30 @@ def read_mails():
 
     # Function se results mangwao
     results = read_email_replies(app, session["user_id"])
-    
+
     return render_template("sync_results.html", results=results)
+
+
+
+scheduler = APScheduler()
+
+def auto_read_mails():
+    with app.app_context():
+        print(" Auto email sync running...")
+        user_id = 1
+        read_email_replies(app, user_id)
+
+def start_scheduler(app):
+    scheduler.init_app(app)
+
+    scheduler.add_job(
+        id="email_job",
+        func=auto_read_mails,
+        trigger="interval",
+        minutes=1
+    )
+
+    scheduler.start()
 
 
 
@@ -444,6 +416,12 @@ def delete_event(id):
     return redirect(url_for("index"))
 
 
+@app.route("/event-history")
+def event_history():
+    logs = EventUpdateLog.query.order_by(EventUpdateLog.created_at.desc()).all()
+    return render_template("event_history.html", logs=logs)
+
 
 if __name__ == "__main__":
+    start_scheduler(app)
     app.run(debug=True)   

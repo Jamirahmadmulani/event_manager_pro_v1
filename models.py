@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -16,7 +17,25 @@ class Event(db.Model):
     date = db.Column(db.Date, nullable=False)
     location = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)   
-    
-
-    # 🔥 NEW FIELD (AI + USER LINK)
     created_by = db.Column(db.Integer, nullable=True)
+
+
+
+class EventUpdateLog(db.Model):
+    __tablename__ = "event_update_log"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    #  linked event
+    event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
+
+    #  snapshot of updated data
+    name = db.Column(db.String(100))
+    date = db.Column(db.Date)
+    location = db.Column(db.String(100))
+    description = db.Column(db.Text)
+
+    #  what fields were changed
+    fields_changed = db.Column(db.String(255))
+
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)

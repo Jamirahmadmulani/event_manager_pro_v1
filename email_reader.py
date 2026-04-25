@@ -6,6 +6,7 @@ import google.generativeai as genai
 from datetime import datetime, timedelta, timezone
 from bs4 import BeautifulSoup
 import email.utils
+from models import EventUpdateLog
 
 from models import db, Event, User
 
@@ -148,6 +149,17 @@ def read_email_replies(app, user_id):
 
                 db.session.commit()
                 print(f"DB UPDATED FOR EVENT ID {event.id}")
+                log = EventUpdateLog(
+                    event_id=event.id,
+                    name=event.name,
+                    location=event.location,
+                    description=event.description,
+                    date=event.date,
+                    fields_changed=", ".join(changes) if changes else "Details Updated"
+                    
+                )
+                db.session.add(log)
+                db.session.commit()
 
                 # 2. Yahan list mein data add kiya (Sath mein 'fields_changed' bhi bhej diya)
                 updated_events.append({

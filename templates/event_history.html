@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Update History</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+
+        .container {
+            width: 95%;
+            margin: auto;
+            margin-top: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #333;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .badge {
+            background: #007bff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 5px;
+        }
+
+        .top-bar {
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: green;
+            color: white;
+            padding: 6px 12px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="top-bar">
+        <a class="btn" href="/events"> Back</a>
+    </div>
+
+    <h2> Event Update History</h2>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Fields Changed</th>
+           
+            <th>Created At</th>
+        </tr>
+
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.event_id }}</td>
+            <td>{{ log.name }}</td>
+            <td>{{ log.location }}</td>
+            <td>{{ log.date }}</td>
+            <td>{{ log.description }}</td>
+            <td><span class="badge">{{ log.fields_changed }}</span></td>
+           
+            <td>{{ log.created_at }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
