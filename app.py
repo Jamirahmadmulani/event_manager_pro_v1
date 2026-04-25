@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 from email_reader import read_email_replies
 from flask_apscheduler import APScheduler
+import os
 
 
 
@@ -424,6 +425,11 @@ def event_history():
     return render_template("event_history.html", logs=logs)
 
 
+
+
 if __name__ == "__main__":
     start_scheduler(app)
-    app.run(debug=True)   
+    # Render provides the port via environment variable
+    port = int(os.environ.get("PORT", 10000))
+    # host="0.0.0.0" is mandatory for Render/Docker
+    app.run(host="0.0.0.0", port=port, debug=False)
