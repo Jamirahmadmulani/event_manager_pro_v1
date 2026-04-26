@@ -20,7 +20,7 @@ model = genai.GenerativeModel("gemini-flash-latest")
 
 def clean_email(msg):
     body = ""
-    try:
+    try: 
         if msg.is_multipart():
             for part in msg.walk():
                 content_type = part.get_content_type()
@@ -35,7 +35,7 @@ def clean_email(msg):
         pass
     return body.strip()
 
-
+#  GEMINI FUNCTION TO EXTRACT DATA FROM EMAILS
 def extract_data_with_gemini(subject, body):
     prompt = f"""
     Analyze this email thread. Extract event details.
